@@ -23,6 +23,7 @@ export class PlacePage {
     private placesService: PlacesService
   ) {
     this.place = this.navParams.get("place");
+    console.log("loaded place", this.place);
     this.index = this.navParams.get("index");
   }
 

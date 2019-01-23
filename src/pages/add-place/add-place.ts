@@ -5,7 +5,6 @@ import {
   NavParams,
   ModalController,
   LoadingController,
-  AlertController,
   ToastController
 } from "ionic-angular";
 import { NgForm } from "@angular/forms";
@@ -30,7 +29,6 @@ export class AddPlacePage {
     private modalCtrl: ModalController,
     private geoLocation: Geolocation,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private camera: Camera,
     private placesService: PlacesService,
@@ -113,11 +111,13 @@ export class AddPlacePage {
       .then(imageData => {
         const currentName = imageData.replace(/^.*[\\\/]/, "");
         const path = imageData.replace(/[^\/]*$/, "");
+        const newFileName = new Date().getUTCMilliseconds() + ".jpg";
+
         this.File.moveFile(
           path,
           currentName,
           cordova.file.dataDirectory,
-          currentName
+          newFileName
         )
           .then(data => {
             this.imageUrl = data.nativeURL;

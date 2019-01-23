@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NavController, ModalController } from "ionic-angular";
 import { AddPlacePage } from "../add-place/add-place";
 import { Place } from "../../models/place";
@@ -9,7 +9,7 @@ import { PlacePage } from "../place/place";
   selector: "page-home",
   templateUrl: "home.html"
 })
-export class HomePage {
+export class HomePage implements OnInit {
   addPlacePage: any = AddPlacePage;
   places: Place[] = [];
   constructor(
@@ -19,6 +19,12 @@ export class HomePage {
   ) {}
   ionViewWillEnter() {
     this.places = this.placesService.loadPlace();
+  }
+  ngOnInit() {
+    this.placesService.fetchPlaces().then((places: Place[]) => {
+      console.log("loaded places", places);
+      this.places = places;
+    });
   }
   onOpenPlace(place: Place, index: number) {
     const modal = this.modalCtrl.create(PlacePage, {
